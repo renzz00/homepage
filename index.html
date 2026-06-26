@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>six</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -258,6 +260,120 @@
       .dot, .eq span { animation: none; }
       .link:hover { transform: none; }
     }
+
+    /* ── Together card ── */
+    .together-card { text-align: center; }
+
+    .together-title {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      letter-spacing: 0.01em;
+      color: var(--text);
+      margin-bottom: 1.4rem;
+    }
+    .t-hrt {
+      font-style: normal;
+      color: #e85d8a;
+      margin: 0 0.35em;
+    }
+    html.dark .t-hrt { color: #ff7faa; }
+
+    .together-profiles {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.5rem; margin-bottom: 1.25rem;
+    }
+    .together-profile { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+
+    .t-av-wrap { position: relative; width: 64px; height: 64px; }
+    .t-av {
+      width: 64px; height: 64px; border-radius: 50%;
+      object-fit: cover; display: block;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.13);
+      background: var(--pill-bg);
+    }
+    .t-deco {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 77px; height: 77px;
+      object-fit: contain; pointer-events: none;
+      z-index: 1; display: none;
+    }
+
+    .t-pname { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.05em; }
+
+    .t-heart-mid {
+      font-size: 1.3rem; color: #e85d8a; flex-shrink: 0;
+      filter: drop-shadow(0 0 6px rgba(232,93,138,0.5));
+      animation: hb 2s ease-in-out infinite;
+    }
+    html.dark .t-heart-mid { color: #ff7faa; filter: drop-shadow(0 0 7px rgba(255,127,170,0.65)); }
+    @keyframes hb { 0%,100%{transform:scale(1);} 50%{transform:scale(1.22);} }
+
+    .t-divider { width: 32px; height: 1px; background: var(--divider); margin: 0 auto 0.9rem; }
+
+    .t-clabel {
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.55rem;
+    }
+
+    .t-counter { display: flex; align-items: flex-start; justify-content: center; }
+    .t-unit { display: flex; flex-direction: column; align-items: center; }
+    .t-val {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-weight: 700; line-height: 1; letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .t-uname {
+      font-size: 0.52rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted); margin-top: 0.28rem;
+      font-family: 'Space Mono', monospace;
+    }
+    .t-col {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-weight: 700; line-height: 1;
+      color: var(--dim); padding: 0 0.1rem;
+      animation: t-blink 1s step-end infinite;
+      user-select: none;
+    }
+    @keyframes t-blink { 0%,100%{opacity:1;} 50%{opacity:0.15;} }
+
+    .t-since {
+      font-size: 0.68rem; color: var(--muted);
+      margin-top: 0.55rem; margin-bottom: 1.25rem;
+      font-weight: 300; letter-spacing: 0.02em;
+    }
+    .t-since em { color: #e85d8a; font-style: normal; }
+    html.dark .t-since em { color: #ff7faa; }
+
+    .t-origin { border-top: 1px solid var(--divider); padding-top: 1rem; text-align: left; }
+    .t-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); opacity: 0.6; margin-bottom: 0.7rem;
+    }
+    .t-msgs { display: flex; flex-direction: column; gap: 0.32rem; }
+    .t-msg { display: flex; align-items: baseline; gap: 0.45rem; }
+    .t-author {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; font-weight: 700; flex-shrink: 0; line-height: 1.4;
+    }
+    .t-him { color: #7c6cd4; }
+    .t-her { color: #c44478; }
+    html.dark .t-him { color: #9b8fd4; }
+    html.dark .t-her { color: #ed6e97; }
+    .t-text {
+      font-size: 0.73rem; color: var(--sub); font-weight: 300;
+      line-height: 1.4; flex: 1; opacity: 0.75;
+    }
+    .t-ts {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.52rem; color: var(--muted); opacity: 0.45;
+      flex-shrink: 0; white-space: nowrap;
+    }
   </style>
 </head>
 <body>
@@ -316,7 +432,7 @@
         YouTube
       </a>
       <a class="link" href="https://roblox.com/users/3222485085/profile" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M5.164 0L.16 18.928L18.836 24L23.84 5.072Zm8.747 15.354l-5.219-1.417l1.399-5.29l5.22 1.418l-1.4 5.29z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M18.926 23.998L.002 18.892 5.077.002 24 5.108zm-9.6-9.6l2.4 2.4 2.4-2.4-2.4-2.4z"/></svg>
         Roblox
       </a>
       <a class="link" href="https://steamcommunity.com/id/6ixpathsxz" target="_blank" rel="noopener">
@@ -382,6 +498,69 @@
         alt="Streak" loading="lazy" onerror="this.style.display='none'">
     </div>
   </div>
+
+  <!-- Together -->
+  <div class="card together-card">
+    <div class="act-hdr">
+      Dont worry you'll find someone
+    </div>
+    <div class="together-profiles">
+      <div class="together-profile">
+        <div class="t-av-wrap">
+          <img class="t-av" id="t-av-him" src="https://r2.guns.lol/9daa3f4a-06d6-4e4c-8e1d-cec1d76060bf.webp" alt="six">
+          <img class="t-deco" id="t-dc-him" alt="">
+        </div>
+        <span class="t-pname">six</span>
+      </div>
+
+      <div class="t-heart-mid">&#9829;</div>
+
+      <div class="together-profile">
+        <div class="t-av-wrap">
+          <img class="t-av" id="t-av-her" src="" alt="leah">
+          <img class="t-deco" id="t-dc-her" alt="">
+        </div>
+        <span class="t-pname">leah</span>
+      </div>
+    </div>
+
+    <div class="t-divider"></div>
+    <div class="t-clabel">time together</div>
+
+    <div class="t-counter">
+      <div class="t-unit"><span class="t-val" id="t-days">000</span><span class="t-uname">days</span></div>
+      <span class="t-col">:</span>
+      <div class="t-unit"><span class="t-val" id="t-hrs">00</span><span class="t-uname">hrs</span></div>
+      <span class="t-col">:</span>
+      <div class="t-unit"><span class="t-val" id="t-min">00</span><span class="t-uname">min</span></div>
+      <span class="t-col">:</span>
+      <div class="t-unit"><span class="t-val" id="t-sec">00</span><span class="t-uname">sec</span></div>
+    </div>
+
+    <div class="t-since">since <em>may 15, 2026 &middot; 8:53 pm</em></div>
+
+    <div class="t-origin">
+      <div class="t-eyebrow">where it started</div>
+      <div class="t-msgs">
+        <div class="t-msg">
+          <span class="t-author t-her">leah</span>
+          <span class="t-text">mine?</span>
+          <span class="t-ts">5/15/26 8:53 PM</span>
+        </div>
+        <div class="t-msg">
+          <span class="t-author t-him">six</span>
+          <span class="t-text">hi</span>
+          <span class="t-ts">5/15/26 8:53 PM</span>
+        </div>
+        <div class="t-msg">
+          <span class="t-author t-her">leah</span>
+          <span class="t-text">YAY</span>
+          <span class="t-ts">5/15/26 8:54 PM</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 </div>
 <footer class="footer">six · guns.lol/6ixpaths.xz</footer>
@@ -495,7 +674,7 @@ async function loadLanyard() {
     // Decoration
     if (u.avatar_decoration_data?.asset) {
       const el = document.getElementById('deco');
-      el.src = `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png?size=240`;
+      el.src = `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png?size=240&passthrough=true`;
       el.style.display = 'block';
     }
 
@@ -586,6 +765,41 @@ async function loadLanyard() {
 
 loadLanyard();
 setInterval(loadLanyard, 30000);
+
+/* ── Together card ── */
+const HER_ID    = '1450917009935044684';
+const T_START   = new Date(2026, 4, 15, 20, 53, 0); // May 15 2026, 8:53 PM local
+
+async function loadTogetherUser(id, avEl, dcEl) {
+  try {
+    const json = await fetch(`https://api.lanyard.rest/v1/users/${id}`).then(r => r.json());
+    if (!json.success) return;
+    const u = json.data.discord_user;
+    if (u.avatar) {
+      const ext = u.avatar.startsWith('a_') ? 'gif' : 'png';
+      avEl.src = `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.${ext}?size=128`;
+    }
+    if (u.avatar_decoration_data?.asset) {
+      dcEl.src = `https://cdn.discordapp.com/avatar-decoration-presets/${u.avatar_decoration_data.asset}.png?size=240&passthrough=true`;
+      dcEl.style.display = 'block';
+    }
+  } catch(e) { console.warn('Together Lanyard:', id, e); }
+}
+
+function tickTogether() {
+  const s   = Math.max(0, Math.floor((Date.now() - T_START) / 1000));
+  const pad = (n, w=2) => String(n).padStart(w, '0');
+  document.getElementById('t-days').textContent = pad(Math.floor(s / 86400), 3);
+  document.getElementById('t-hrs').textContent  = pad(Math.floor(s / 3600) % 24);
+  document.getElementById('t-min').textContent  = pad(Math.floor(s / 60) % 60);
+  document.getElementById('t-sec').textContent  = pad(s % 60);
+}
+tickTogether();
+setInterval(tickTogether, 1000);
+
+loadTogetherUser(DISCORD_ID, document.getElementById('t-av-him'), document.getElementById('t-dc-him'));
+loadTogetherUser(HER_ID,     document.getElementById('t-av-her'), document.getElementById('t-dc-her'));
+
 </script>
 </body>
 </html>
