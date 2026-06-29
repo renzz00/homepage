@@ -91,30 +91,31 @@
     align-items: center;
     gap: 14px;
   }
-  .avatar-wrap {
+  .avatar-frame {
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 96px;
+    height: 96px;
     flex-shrink: 0;
   }
-  .avatar-wrap img {
+  .avatar-frame img {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
     border-radius: 50%;
     object-fit: cover;
     border: 1px solid var(--border);
   }
-  .avatar-wrap .deco {
-    position: absolute;
-    inset: -8px;
+  .avatar-frame .avatar {
+    width: 80px;
+    height: 80px;
+    left: 8px;
+    top: 8px;
+  }
+  .avatar-frame .deco {
+    inset: 0;
     width: 96px;
     height: 96px;
-    left: -8px;
-    top: -8px;
+    z-index: 1;
     pointer-events: none;
-    z-index: 2;
   }
   .meta h2 {
     font-weight: 600;
@@ -165,6 +166,7 @@
     font-weight: 600;
     font-size: 15px;
     color: var(--fg);
+    max-width: 60ch;
   }
   .now-playing .artist {
     font-size: 13px;
@@ -179,12 +181,6 @@
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.18em;
-  }
-  .buffer-bar {
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent-dim));
-    transform-origin: left;
-    opacity: 0.7;
   }
   .relationship {
     border-top: 1px solid var(--border);
@@ -209,6 +205,28 @@
     font-size: 14px;
     color: var(--dim);
     letter-spacing: 0.02em;
+  }
+  .favorites {
+    display: grid;
+    gap: 16px;
+  }
+  .favorites h2 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    letter-spacing: -0.02em;
+  }
+  .favorite-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .fav {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    color: var(--fg);
+    background: var(--card);
   }
   .links {
     display: flex;
@@ -265,14 +283,14 @@
   <section class="hero">
     <h1>six</h1>
     <div class="handles">@.s1d6 / @sixxz</div>
-    <div class="tagline">Dev hobbyist from Ohio building quiet, considered things on the internet.</div>
+    <div class="tagline">Dev hobbyist building quiet, considered things on the internet.</div>
   </section>
 
   <section class="grid-2">
     <article class="card" id="six-card">
       <header>
-        <div class="avatar-wrap">
-          <img id="six-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='%23222220'/></svg>" alt="six" />
+        <div class="avatar-frame">
+          <img id="six-avatar" class="avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='%23222220'/></svg>" alt="six" />
           <img id="six-deco" class="deco" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect width='96' height='96' fill='transparent'/></svg>" alt="" />
         </div>
         <div class="meta">
@@ -294,12 +312,12 @@
 
     <article class="card" id="her-card">
       <header>
-        <div class="avatar-wrap">
-          <img id="her-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='%23222220'/></svg>" alt="eibmux" />
+        <div class="avatar-frame">
+          <img id="her-avatar" class="avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='%23222220'/></svg>" alt="Leah" />
           <img id="her-deco" class="deco" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect width='96' height='96' fill='transparent'/></svg>" alt="" />
         </div>
         <div class="meta">
-          <h2 id="her-name">loading</h2>
+          <h2 id="her-name">Leah</h2>
           <div class="user" id="her-user">@xumbie</div>
         </div>
       </header>
@@ -321,7 +339,17 @@
       <h2>since 2026.05.15 20:53</h2>
       <div class="duration" id="duration">0d 00h 00m 00s</div>
     </header>
-    <div class="tagline">Together with eibmux — built slowly, in plain sight.</div>
+    <div class="tagline">Together with Leah — built slowly, in plain sight.</div>
+  </section>
+
+  <section class="favorites">
+    <h2>favorites</h2>
+    <div class="favorite-list">
+      <span class="fav">Hermes Agent</span>
+      <span class="fav">KDE</span>
+      <span class="fav">Fedora</span>
+      <span class="fav">Homelabs</span>
+    </div>
   </section>
 
   <section class="links">
@@ -349,7 +377,6 @@ const render = (uid, data) => {
   const activities = data?.activities || [];
   const spotify = data?.spotify;
 
-  // identity
   if (uid === SIX_ID) {
     if (d) {
       setImage('six-avatar', `https://cdn.discordapp.com/avatars/${d.id}/${d.avatar}.png?size=256`);
@@ -385,7 +412,7 @@ const render = (uid, data) => {
       if (d.avatar_decoration_data?.asset) {
         setImage('her-deco', `https://cdn.discordapp.com/avatar-decoration-presets/${d.avatar_decoration_data.asset}.png`);
       }
-      document.getElementById('her-name').textContent = d.global_name || d.username;
+      document.getElementById('her-name').textContent = 'Leah';
       document.getElementById('her-user').textContent = `@${d.username}`;
     }
     const status = data?.discord_status || 'offline';
