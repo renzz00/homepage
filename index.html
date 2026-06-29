@@ -319,6 +319,74 @@
   .link:active {
     transform: translateY(0px);
   }
+  .github-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .github-stat {
+    border: 1px solid var(--border);
+    padding: 14px 12px;
+    border-radius: 12px;
+    background: var(--card);
+    text-align: center;
+    display: grid;
+    gap: 6px;
+  }
+  .github-stat .value {
+    font-family: var(--font-display);
+    font-size: 26px;
+    letter-spacing: -0.02em;
+  }
+  .github-stat .label {
+    font-size: 12px;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+  .languages {
+    display: grid;
+    gap: 10px;
+  }
+  .language-row {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    font-size: 13px;
+    color: var(--dim);
+  }
+  .language-bar-track {
+    height: 8px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .language-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    transform-origin: left;
+  }
+  .activity-list {
+    display: grid;
+    gap: 10px;
+  }
+  .activity-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--card);
+    font-size: 13px;
+    color: var(--dim);
+  }
+  .activity-item .name {
+    color: var(--fg);
+    font-weight: 500;
+  }
   .theme-toggle {
     position: fixed;
     right: 16px;
@@ -333,6 +401,7 @@
     font-size: 12px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    z-index: 10;
   }
   .loading {
     opacity: 0.4;
@@ -353,6 +422,83 @@
     font-size: 12px;
     color: var(--muted);
   }
+  .github {
+    display: grid;
+    gap: 22px;
+  }
+  .github-inner {
+    display: grid;
+    gap: 22px;
+  }
+  .github-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .github-stat {
+    border: 1px solid var(--border);
+    padding: 14px 12px;
+    border-radius: 12px;
+    background: var(--card);
+    text-align: center;
+    display: grid;
+    gap: 6px;
+  }
+  .github-stat .value {
+    font-family: var(--font-display);
+    font-size: 26px;
+    letter-spacing: -0.02em;
+  }
+  .github-stat .label {
+    font-size: 12px;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+  .languages {
+    display: grid;
+    gap: 10px;
+  }
+  .language-row {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    font-size: 13px;
+    color: var(--dim);
+  }
+  .language-bar-track {
+    height: 8px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .language-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    transform-origin: left;
+    background: var(--accent);
+  }
+  .activity-list {
+    display: grid;
+    gap: 10px;
+  }
+  .activity-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--card);
+    font-size: 13px;
+    color: var(--dim);
+  }
+  .activity-item .name {
+    color: var(--fg);
+    font-weight: 500;
+  }
 </style>
 </head>
 <body>
@@ -361,6 +507,12 @@
     <h1>six</h1>
     <div class="handles">@.s1d6 / @sixxz</div>
     <div class="tagline">i do homelabbing and want to learn Rust</div>
+  </section>
+
+  <section class="links">
+    <a class="link" href="https://guns.lol/6ixpaths.xz" target="_blank">guns.lol</a>
+    <a class="link" href="https://discord.com/users/941884944815390781" target="_blank">Discord</a>
+    <a class="link" href="https://github.com/renzz00" target="_blank">GitHub</a>
   </section>
 
   <section class="grid-2">
@@ -430,10 +582,27 @@
     </div>
   </section>
 
-  <section class="links">
-    <a class="link" href="https://guns.lol/6ixpaths.xz" target="_blank">guns.lol</a>
-    <a class="link" href="https://discord.com/users/941884944815390781" target="_blank">Discord</a>
-    <a class="link" href="https://github.com/renzz00" target="_blank">GitHub</a>
+  <section class="github" id="github-section">
+    <div class="loading" id="github-loading">loading github…</div>
+    <div class="github-inner" id="github-content" style="display:none;">
+      <h2>github</h2>
+      <div class="github-stats">
+        <div class="github-stat"><div class="value" id="gh-repos">0</div><div class="label">repos</div></div>
+        <div class="github-stat"><div class="value" id="gh-followers">0</div><div class="label">followers</div></div>
+        <div class="github-stat"><div class="value" id="gh-stars">0</div><div class="label">stars</div></div>
+        <div class="github-stat"><div class="value" id="gh-forks">0</div><div class="label">forks</div></div>
+      </div>
+
+      <div class="languages">
+        <div class="label">languages</div>
+        <div id="languages-rows"></div>
+      </div>
+
+      <div class="activity-list">
+        <div class="label">recent</div>
+        <div id="activity-rows"></div>
+      </div>
+    </div>
   </section>
 </main>
 
@@ -550,6 +719,119 @@ const connect = () => {
   ws.addEventListener('close', () => setTimeout(connect, 1500));
 };
 
+const GH_USER = 'renzz00';
+
+const fmt = (n) => {
+  if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+  return String(n);
+};
+
+const qs = (sel) => document.querySelector(sel);
+
+const renderGithubStats = () => {
+  const section = document.getElementById('github-section');
+  const loader = document.getElementById('github-loading');
+  const box = document.getElementById('github-content');
+  if (!section || !loader || !box) return;
+
+  const load = loader.classList.add('loading');
+  const fail = () => {
+    loader.textContent = 'unable to load github';
+    loader.classList.remove('loading');
+  };
+
+  Promise.all([
+    fetch(`https://api.github.com/users/${GH_USER}`).then(r => r.json()),
+    fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&type=owner`).then(r => r.json()),
+    fetch(`https://api.github.com/users/${GH_USER}/events/public?per_page=30`).then(r => r.json()),
+  ])
+    .then(([profile, repos, events]) => {
+      if (!profile || profile.message) throw new Error('profile error');
+
+      const reposSafe = Array.isArray(repos) ? repos : [];
+      const eventsSafe = Array.isArray(events) ? events : [];
+
+      const reposCount = profile.public_repos ?? reposSafe.length;
+      const stars = reposSafe.reduce((s, r) => s + (r.stargazers_count || 0), 0);
+      const forks = reposSafe.reduce((s, r) => s + (r.forks_count || 0), 0);
+      const followers = profile.followers ?? 0;
+
+      const out = document.getElementById('gh-repos');
+      const outFollowers = document.getElementById('gh-followers');
+      const outStars = document.getElementById('gh-stars');
+      const outForks = document.getElementById('gh-forks');
+
+      out.textContent = String(reposCount);
+      if (outFollowers) outFollowers.textContent = fmt(followers);
+      if (outStars) outStars.textContent = fmt(stars);
+      if (outForks) outForks.textContent = fmt(forks);
+
+      const langCounts = {};
+      reposSafe.forEach((r) => {
+        const l = r.language;
+        if (l) langCounts[l] = (langCounts[l] || 0) + 1;
+      });
+      const langEntries = Object.entries(langCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 6);
+      const maxLang = langEntries[0]?.[1] || 1;
+      const rows = langEntries.map(([name, count]) => {
+        const pct = Math.max((count / maxLang) * 100, 4);
+        return `
+          <div class="language-row">
+            <div>${name}</div>
+            <div class="language-bar-track"><div class="language-bar-fill" style="width:${pct}%"></div></div>
+            <div>${count}</div>
+          </div>`;
+      }).join('');
+      const langBox = document.getElementById('languages-rows');
+      if (langBox) langBox.innerHTML = rows;
+
+      const pushes = eventsSafe
+        .filter((e) => e.type === 'PushEvent' && e.payload?.ref?.startsWith('refs/heads/'))
+        .slice(0, 10)
+        .map((e) => {
+          const repo = e.repo?.name || '';
+          const branch = (e.payload?.ref || '').replace('refs/heads/', '');
+          const when = e.created_at ? new Date(e.created_at).toLocaleDateString() : '';
+          return { repo, branch, when };
+        });
+      const activityBox = document.getElementById('activity-rows');
+      if (activityBox) {
+        activityBox.innerHTML = pushes.length
+          ? pushes
+              .map(
+                (x) =>
+                  `<div class="activity-item"><span class="name">${x.repo}</span><span>${x.when ? (x.branch ? '— ' + x.branch : x.when) : ''}</span></div>`
+              )
+              .join('')
+          : '<div class="activity-item"><span class="name">recent commits</span><span>no public pushes found</span></div>';
+      }
+
+      loader.style.display = 'none';
+      box.style.display = '';
+    })
+    .catch(() => fail());
+};
+
+const initGithub = () => {
+  const section = document.getElementById('github-section');
+  if (!section) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          renderGithubStats();
+          observer.disconnect();
+        }
+      });
+    },
+    { rootMargin: '180px' }
+  );
+  observer.observe(section);
+};
+
 (async () => {
   initTheme();
   setInterval(tick, 1000);
@@ -563,6 +845,7 @@ const connect = () => {
     render(HER_ID, r[1].data);
   } catch (e) { console.warn(e); }
   connect();
+  initGithub();
 })();
 </script>
 </body>
