@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>six / @sixxz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --fg: #ececea;
+    --dim: #9a9792;
+    --muted: #5f5c58;
+    --card: #131312;
+    --border: #242220;
+    --accent: #c8a456;
+    --accent-dim: #98833b;
+    --success: #5ed89c;
+    --danger: #e75c5c;
+    --spotify: #4ade80;
+    --font-display: "Archivo Black", system-ui, sans-serif;
+    --font-body: "Inter", system-ui, sans-serif;
+  }
+  [data-theme="light"] {
+    --bg: #f4f3f1;
+    --fg: #1a1917;
+    --dim: #57544f;
+    --muted: #8b877f;
+    --card: #ffffff;
+    --border: #e8e6e1;
+    --accent: #a7843a;
+    --accent-dim: #dbbe7e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 64px 24px 120px;
+    display: grid;
+    gap: 56px;
+  }
+  .hero {
+    display: grid;
+    gap: 10px;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(82px, 16vw, 180px);
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+    word-break: break-word;
+  }
+  .hero .handles {
+    font-size: 15px;
+    color: var(--dim);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .tagline {
+    max-width: 58ch;
+    font-size: 18px;
+    color: var(--dim);
+    line-height: 1.6;
+    margin-top: 6px;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    display: grid;
+    gap: 18px;
+  }
+  .card header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .avatar-wrap {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+  }
+  .avatar-wrap img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+  }
+  .avatar-wrap .deco {
+    position: absolute;
+    inset: -8px;
+    width: 96px;
+    height: 96px;
+    left: -8px;
+    top: -8px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .meta h2 {
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+  .meta .user {
+    font-size: 13px;
+    color: var(--dim);
+  }
+  .status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--dim);
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--card);
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot.online { background: var(--success); box-shadow: 0 0 8px rgba(94, 216, 156, 0.35); }
+  .dot.idle { background: #facc15; }
+  .dot.dnd { background: var(--danger); }
+  .dot.offline { background: var(--muted); }
+  .now-playing {
+    display: grid;
+    gap: 6px;
+  }
+  .now-playing .label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+  .now-playing .track {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--fg);
+  }
+  .now-playing .artist {
+    font-size: 13px;
+    color: var(--dim);
+  }
+  .activity {
+    display: grid;
+    gap: 10px;
+  }
+  .activity .label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+  .buffer-bar {
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-dim));
+    transform-origin: left;
+    opacity: 0.7;
+  }
+  .relationship {
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+    display: grid;
+    gap: 18px;
+    align-content: start;
+  }
+  .relationship header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .relationship h2 {
+    font-family: var(--font-display);
+    font-size: 36px;
+    letter-spacing: -0.02em;
+  }
+  .duration {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 14px;
+    color: var(--dim);
+    letter-spacing: 0.02em;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .link {
+    color: var(--fg);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .link:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+  .theme-toggle {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    padding: 10px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .loading {
+    opacity: 0.4;
+    animation: pulse 1.2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.75; }
+  }
+  .fade {
+    animation: fade .45s ease-out;
+  }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <h1>six</h1>
+    <div class="handles">@.s1d6 / @sixxz</div>
+    <div class="tagline">Dev hobbyist from Ohio building quiet, considered things on the internet.</div>
+  </section>
+
+  <section class="grid-2">
+    <article class="card" id="six-card">
+      <header>
+        <div class="avatar-wrap">
+          <img id="six-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='%23222220'/></svg>" alt="six" />
+          <img id="six-deco" class="deco" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect width='96' height='96' fill='transparent'/></svg>" alt="" />
+        </div>
+        <div class="meta">
+          <h2 id="six-name">loading</h2>
+          <div class="user" id="six-user">@.s1d6</div>
+        </div>
+      </header>
+      <div class="status-row">
+        <div class="status-pill">
+          <span class="dot offline" id="six-dot"></span>
+          <span id="six-status">loading</span>
+        </div>
+        <div id="six-activity" class="activity">
+          <div class="label">Activity</div>
+          <div class="loading">connecting to lanyard…</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" id="her-card">
+      <header>
+        <div class="avatar-wrap">
+          <img id="her-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='%23222220'/></svg>" alt="eibmux" />
+          <img id="her-deco" class="deco" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect width='96' height='96' fill='transparent'/></svg>" alt="" />
+        </div>
+        <div class="meta">
+          <h2 id="her-name">loading</h2>
+          <div class="user" id="her-user">@xumbie</div>
+        </div>
+      </header>
+      <div class="status-row">
+        <div class="status-pill">
+          <span class="dot offline" id="her-dot"></span>
+          <span id="her-status">loading</span>
+        </div>
+        <div id="her-activity" class="activity">
+          <div class="label">Activity</div>
+          <div class="loading">connecting to lanyard…</div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="relationship">
+    <header>
+      <h2>since 2026.05.15 20:53</h2>
+      <div class="duration" id="duration">0d 00h 00m 00s</div>
+    </header>
+    <div class="tagline">Together with eibmux — built slowly, in plain sight.</div>
+  </section>
+
+  <section class="links">
+    <a class="link" href="https://guns.lol/6ixpaths.xz" target="_blank">guns.lol</a>
+    <a class="link" href="https://discord.com/users/941884944815390781" target="_blank">Discord</a>
+    <a class="link" href="https://github.com/renzz00" target="_blank">GitHub</a>
+  </section>
+</main>
+
+<button class="theme-toggle" id="theme-toggle">light/dark</button>
+
+<script>
+const SIX_ID = '941884944815390781';
+const HER_ID = '1450917009935044684';
+const START = new Date('2026-05-15T20:53:00').getTime();
+
+const setImage = (id, src) => {
+  const el = document.getElementById(id);
+  if (!el || !src) return;
+  el.src = src;
+};
+
+const render = (uid, data) => {
+  const d = data?.discord_user;
+  const activities = data?.activities || [];
+  const spotify = data?.spotify;
+
+  // identity
+  if (uid === SIX_ID) {
+    if (d) {
+      setImage('six-avatar', `https://cdn.discordapp.com/avatars/${d.id}/${d.avatar}.png?size=256`);
+      if (d.avatar_decoration_data?.asset) {
+        setImage('six-deco', `https://cdn.discordapp.com/avatar-decoration-presets/${d.avatar_decoration_data.asset}.png`);
+      }
+      document.getElementById('six-name').textContent = d.global_name || d.username;
+      document.getElementById('six-user').textContent = `@${d.username}`;
+    }
+    const status = data?.discord_status || 'offline';
+    const dot = document.getElementById('six-dot');
+    dot.className = `dot ${status}`;
+    document.getElementById('six-status').textContent = status;
+
+    const actEl = document.getElementById('six-activity');
+    actEl.innerHTML = '<div class="label">Activity</div>';
+    if (spotify) {
+      actEl.innerHTML += `
+        <div class="now-playing">
+          <div class="track">${spotify.song} — ${spotify.artist}</div>
+          <div class="artist">${spotify.album}</div>
+          <div class="label">spotify</div>
+        </div>`;
+    } else if (activities.length) {
+      const a = activities.find(x => x.type === 0) || activities[0];
+      actEl.innerHTML += `<div>${a.name} — ${a.details || ''}</div>`;
+    } else {
+      actEl.innerHTML += '<div>nothing playing</div>';
+    }
+  } else {
+    if (d) {
+      setImage('her-avatar', `https://cdn.discordapp.com/avatars/${d.id}/${d.avatar}.png?size=256`);
+      if (d.avatar_decoration_data?.asset) {
+        setImage('her-deco', `https://cdn.discordapp.com/avatar-decoration-presets/${d.avatar_decoration_data.asset}.png`);
+      }
+      document.getElementById('her-name').textContent = d.global_name || d.username;
+      document.getElementById('her-user').textContent = `@${d.username}`;
+    }
+    const status = data?.discord_status || 'offline';
+    const dot = document.getElementById('her-dot');
+    dot.className = `dot ${status}`;
+    document.getElementById('her-status').textContent = status;
+    const actEl = document.getElementById('her-activity');
+    actEl.innerHTML = '<div class="label">Activity</div><div>nothing playing</div>';
+  }
+};
+
+const initTheme = () => {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const attr = document.documentElement.getAttribute('data-theme');
+    const next = attr === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+};
+
+const tick = () => {
+  const delta = Date.now() - START;
+  const s = Math.floor(delta / 1000) % 60;
+  const m = Math.floor(delta / 60000) % 60;
+  const h = Math.floor(delta / 3600000) % 24;
+  const d = Math.floor(delta / 86400000);
+  document.getElementById('duration').textContent =
+    `${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+};
+
+let ws = null;
+const connect = () => {
+  ws = new WebSocket('wss://api.lanyard.rest/socket');
+  ws.addEventListener('open', () => {
+    ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: [SIX_ID, HER_ID].join(',') } }));
+  });
+  ws.addEventListener('message', (e) => {
+    const msg = JSON.parse(e.data);
+    if (msg.op === 0 && msg.t === 'INIT_STATE') {
+      const d = msg.d;
+      if (d[SIX_ID]) render(SIX_ID, d[SIX_ID]);
+      if (d[HER_ID]) render(HER_ID, d[HER_ID]);
+    }
+    if (msg.op === 1 && msg.d) {
+      const d = msg.d;
+      if (d[SIX_ID] || d[HER_ID]) render(d[SIX_ID] ? SIX_ID : HER_ID, d);
+    }
+  });
+  ws.addEventListener('close', () => setTimeout(connect, 1500));
+};
+
+(async () => {
+  initTheme();
+  setInterval(tick, 1000);
+  tick();
+  try {
+    const r = await Promise.all([
+      fetch(`https://api.lanyard.rest/v1/users/${SIX_ID}`).then(r => r.json()),
+      fetch(`https://api.lanyard.rest/v1/users/${HER_ID}`).then(r => r.json()),
+    ]);
+    render(SIX_ID, r[0].data);
+    render(HER_ID, r[1].data);
+  } catch (e) { console.warn(e); }
+  connect();
+})();
+</script>
+</body>
+</html>
