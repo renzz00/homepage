@@ -22,6 +22,7 @@
     --spotify: #4ade80;
     --font-display: "Archivo Black", system-ui, sans-serif;
     --font-body: "Inter", system-ui, sans-serif;
+    --bp: 720px;
   }
   [data-theme="light"] {
     --bg: #f4f3f1;
@@ -40,6 +41,7 @@
     font-family: var(--font-body);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
   main {
     max-width: 1080px;
@@ -50,34 +52,87 @@
   }
   .hero {
     display: grid;
-    gap: 10px;
+    gap: 14px;
   }
   .hero h1 {
     font-family: var(--font-display);
-    font-size: clamp(82px, 16vw, 180px);
-    letter-spacing: -0.045em;
-    line-height: 0.95;
+    font-size: clamp(76px, 14vw, 150px);
+    letter-spacing: -0.05em;
+    line-height: 0.92;
     word-break: break-word;
   }
   .hero .handles {
-    font-size: 15px;
+    font-size: 14px;
     color: var(--dim);
-    letter-spacing: 0.22em;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
   }
   .tagline {
-    max-width: 58ch;
-    font-size: 18px;
+    max-width: 62ch;
+    font-size: 17px;
     color: var(--dim);
-    line-height: 1.6;
-    margin-top: 6px;
+    line-height: 1.65;
+    margin-top: 8px;
   }
   .grid-2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    gap: 32px;
   }
-  @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+  @media (max-width: 720px) {
+    .grid-2 {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    main {
+      padding: 40px 16px 100px;
+      gap: 40px;
+    }
+    .hero h1 {
+      font-size: clamp(72px, 18vw, 130px);
+    }
+    h2 {
+      font-size: 26px;
+    }
+    .relationship h2,
+    .favorites h2 {
+      font-size: 26px;
+    }
+  }
+  @media (max-width: 420px) {
+    main {
+      padding: 32px 14px 88px;
+      gap: 32px;
+    }
+    .hero h1 {
+      font-size: 56px;
+      letter-spacing: -0.03em;
+    }
+    .card {
+      padding: 18px;
+      gap: 14px;
+    }
+    .avatar-frame {
+      width: 84px;
+      height: 84px;
+    }
+    .avatar-frame .avatar {
+      width: 68px;
+      height: 68px;
+      left: 8px;
+      top: 8px;
+    }
+    .avatar-frame .deco {
+      width: 84px;
+      height: 84px;
+    }
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
   .card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -118,6 +173,7 @@
     pointer-events: none;
   }
   .meta h2 {
+    font-family: var(--font-body);
     font-weight: 600;
     font-size: 17px;
     letter-spacing: -0.01em;
@@ -130,8 +186,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 14px;
     font-size: 13px;
     color: var(--dim);
+    flex-wrap: wrap;
+  }
+  @media (max-width: 720px) {
+    .status-row {
+      justify-content: flex-start;
+    }
   }
   .status-pill {
     display: inline-flex;
@@ -141,17 +204,19 @@
     padding: 6px 10px;
     border-radius: 999px;
     background: var(--card);
+    min-height: 32px;
   }
   .dot {
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
     display: inline-block;
+    will-change: transform, opacity;
   }
-  .dot.online { background: var(--success); box-shadow: 0 0 8px rgba(94, 216, 156, 0.35); }
+  .dot.online { background: var(--success); box-shadow: 0 0 10px rgba(94, 216, 156, 0.4); }
   .dot.idle { background: #facc15; }
-  .dot.dnd { background: var(--danger); }
-  .dot.offline { background: var(--muted); }
+  .dot.dnd { background: var(--danger); box-shadow: 0 0 10px rgba(231, 92, 92, 0.35); }
+  .dot.offline { background: var(--muted); opacity: .75; }
   .now-playing {
     display: grid;
     gap: 6px;
@@ -194,11 +259,13 @@
     align-items: baseline;
     justify-content: space-between;
     gap: 12px;
+    flex-wrap: wrap;
   }
   .relationship h2 {
     font-family: var(--font-display);
-    font-size: 36px;
+    font-size: 32px;
     letter-spacing: -0.02em;
+    max-width: 80ch;
   }
   .duration {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -212,7 +279,7 @@
   }
   .favorites h2 {
     font-family: var(--font-display);
-    font-size: 36px;
+    font-size: 32px;
     letter-spacing: -0.02em;
   }
   .favorite-list {
@@ -240,11 +307,17 @@
     padding: 10px 14px;
     border-radius: 10px;
     font-size: 14px;
-    transition: transform .2s ease, border-color .2s ease;
+    transition: transform .6s cubic-bezier(.1,.6,.3,1), border-color .6s ease;
+    will-change: transform;
   }
-  .link:hover {
-    transform: translateY(-2px);
-    border-color: var(--accent);
+  @media (hover: hover) and (pointer: fine) {
+    .link:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+  }
+  .link:active {
+    transform: translateY(0px);
   }
   .theme-toggle {
     position: fixed;
@@ -263,11 +336,11 @@
   }
   .loading {
     opacity: 0.4;
-    animation: pulse 1.2s infinite;
+    animation: pulse 2.4s ease-in-out infinite;
   }
   @keyframes pulse {
-    0%, 100% { opacity: 0.35; }
-    50% { opacity: 0.75; }
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.65; }
   }
   .fade {
     animation: fade .45s ease-out;
@@ -275,6 +348,10 @@
   @keyframes fade {
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+  .status-note {
+    font-size: 12px;
+    color: var(--muted);
   }
 </style>
 </head>
@@ -287,7 +364,7 @@
   </section>
 
   <section class="grid-2">
-    <article class="card" id="six-card">
+    <article class="card">
       <header>
         <div class="avatar-frame">
           <img id="six-avatar" class="avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='%23222220'/></svg>" alt="six" />
@@ -310,7 +387,7 @@
       </div>
     </article>
 
-    <article class="card" id="her-card">
+    <article class="card">
       <header>
         <div class="avatar-frame">
           <img id="her-avatar" class="avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='%23222220'/></svg>" alt="Leah" />
@@ -325,6 +402,7 @@
         <div class="status-pill">
           <span class="dot offline" id="her-dot"></span>
           <span id="her-status">loading</span>
+          <span class="status-note" id="her-status-note"></span>
         </div>
         <div id="her-activity" class="activity">
           <div class="label">Activity</div>
@@ -416,9 +494,13 @@ const render = (uid, data) => {
       document.getElementById('her-user').textContent = '@******';
     }
     const status = data?.discord_status || 'offline';
+    const noteEl = document.getElementById('her-status-note');
     const dot = document.getElementById('her-dot');
     dot.className = `dot ${status}`;
     document.getElementById('her-status').textContent = status;
+    if (noteEl) {
+      noteEl.textContent = status === 'offline' ? 'offline' : '';
+    }
     const actEl = document.getElementById('her-activity');
     actEl.innerHTML = '<div class="label">Activity</div><div>nothing playing</div>';
   }
